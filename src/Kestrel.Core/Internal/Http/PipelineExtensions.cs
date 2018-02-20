@@ -17,7 +17,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
         private static byte[] _numericBytesScratch;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ReadOnlySpan<byte> ToSpan(this ReadOnlyBuffer<byte> buffer)
+        public static ReadOnlySpan<byte> ToSpan(this ReadOnlySequence<byte> buffer)
         {
             if (buffer.IsSingleSegment)
             {
@@ -45,7 +45,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
             return result;
         }
 
-        public unsafe static void WriteAsciiNoValidation(ref this OutputWriter<PipeWriter> buffer, string data)
+        public unsafe static void WriteAsciiNoValidation(ref this BufferWriter buffer, string data)
         {
             if (string.IsNullOrEmpty(data))
             {
@@ -74,7 +74,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public unsafe static void WriteNumeric(ref this OutputWriter<PipeWriter> buffer, ulong number)
+        public unsafe static void WriteNumeric(ref this BufferWriter buffer, ulong number)
         {
             const byte AsciiDigitStart = (byte)'0';
 
@@ -124,7 +124,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void WriteNumericMultiWrite(ref this OutputWriter<PipeWriter> buffer, ulong number)
+        private static void WriteNumericMultiWrite(ref this BufferWriter buffer, ulong number)
         {
             const byte AsciiDigitStart = (byte)'0';
 
@@ -145,7 +145,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private unsafe static void WriteAsciiMultiWrite(ref this OutputWriter<PipeWriter> buffer, string data)
+        private unsafe static void WriteAsciiMultiWrite(ref this BufferWriter buffer, string data)
         {
             var remaining = data.Length;
 

@@ -5,6 +5,7 @@ using System;
 using System.Buffers;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Pipelines;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -102,23 +103,17 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.Internal
                     // Ensure we have some reasonable amount of buffer space
                     var buffer = Input.GetMemory(MinAllocBufferSize);
 
-                    try
-                    {
-                        var bytesReceived = await _receiver.ReceiveAsync(buffer);
+                    var bytesReceived = await _receiver.ReceiveAsync(buffer);
 
-                        if (bytesReceived == 0)
-                        {
-                            // FIN
-                            _trace.ConnectionReadFin(ConnectionId);
-                            break;
-                        }
-
-                        Input.Advance(bytesReceived);
-                    }
-                    finally
+                    if (bytesReceived == 0)
                     {
-                        Input.Commit();
+                        // FIN
+                        _trace.ConnectionReadFin(ConnectionId);
+                        break;
                     }
+
+                    Input.Advance(bytesReceived);
+
 
                     var flushTask = Input.FlushAsync();
 
@@ -197,7 +192,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.Internal
                     var result = await Output.ReadAsync();
                     var buffer = result.Buffer;
 
-                    if (result.IsCancelled)
+                    if (result.IsCanceled)
                     {
                         break;
                     }

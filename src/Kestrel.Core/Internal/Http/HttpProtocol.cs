@@ -381,7 +381,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
         {
         }
 
-        protected virtual bool BeginRead(out ValueAwaiter<ReadResult> awaitable)
+        protected virtual bool BeginRead(out PipeAwaiter<ReadResult> awaitable)
         {
             awaitable = default;
             return false;
@@ -899,7 +899,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
 
         private static void WriteChunk(PipeWriter writableBuffer, ArraySegment<byte> buffer)
         {
-            var writer = OutputWriter.Create(writableBuffer);
+            var writer = new BufferWriter(writableBuffer);
             if (buffer.Count > 0)
             {
                 ChunkWriter.WriteBeginChunkBytes(ref writer, buffer.Count);

@@ -7754,7 +7754,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
             return true;
         }
         
-        protected void CopyToFast(ref OutputWriter<PipeWriter> output)
+        protected void CopyToFast(ref BufferWriter buffer)
         {
             var tempBits = _bits | (_contentLength.HasValue ? -9223372036854775808L : 0);
             
@@ -7762,7 +7762,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                 { 
                     if (_headers._rawConnection != null)
                     {
-                        output.Write(_headers._rawConnection);
+                        buffer.Write(_headers._rawConnection);
                     }
                     else 
                     {
@@ -7772,8 +7772,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._Connection[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 17, 14));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 17, 14));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -7788,7 +7788,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                 { 
                     if (_headers._rawDate != null)
                     {
-                        output.Write(_headers._rawDate);
+                        buffer.Write(_headers._rawDate);
                     }
                     else 
                     {
@@ -7798,8 +7798,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._Date[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 31, 8));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 31, 8));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -7819,8 +7819,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._ContentType[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 133, 16));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 133, 16));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -7835,7 +7835,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                 { 
                     if (_headers._rawServer != null)
                     {
-                        output.Write(_headers._rawServer);
+                        buffer.Write(_headers._rawServer);
                     }
                     else 
                     {
@@ -7845,8 +7845,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._Server[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 350, 10));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 350, 10));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -7859,8 +7859,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                 }
                 if ((tempBits & -9223372036854775808L) != 0)
                 {
-                    output.Write(new ReadOnlySpan<byte>(_headerBytes, 592, 18));
-                    PipelineExtensions.WriteNumeric(ref output, (ulong)ContentLength.Value);
+                    buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 592, 18));
+                    PipelineExtensions.WriteNumeric(ref buffer, (ulong)ContentLength.Value);
 
                     if((tempBits & ~-9223372036854775808L) == 0)
                     {
@@ -7877,8 +7877,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._CacheControl[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 0, 17));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 0, 17));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -7898,8 +7898,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._KeepAlive[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 39, 14));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 39, 14));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -7919,8 +7919,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._Pragma[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 53, 10));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 53, 10));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -7940,8 +7940,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._Trailer[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 63, 11));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 63, 11));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -7956,7 +7956,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                 { 
                     if (_headers._rawTransferEncoding != null)
                     {
-                        output.Write(_headers._rawTransferEncoding);
+                        buffer.Write(_headers._rawTransferEncoding);
                     }
                     else 
                     {
@@ -7966,8 +7966,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._TransferEncoding[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 74, 21));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 74, 21));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -7987,8 +7987,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._Upgrade[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 95, 11));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 95, 11));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8008,8 +8008,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._Via[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 106, 7));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 106, 7));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8029,8 +8029,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._Warning[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 113, 11));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 113, 11));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8050,8 +8050,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._Allow[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 124, 9));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 124, 9));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8071,8 +8071,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._ContentEncoding[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 149, 20));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 149, 20));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8092,8 +8092,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._ContentLanguage[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 169, 20));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 169, 20));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8113,8 +8113,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._ContentLocation[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 189, 20));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 189, 20));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8134,8 +8134,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._ContentMD5[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 209, 15));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 209, 15));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8155,8 +8155,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._ContentRange[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 224, 17));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 224, 17));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8176,8 +8176,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._Expires[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 241, 11));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 241, 11));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8197,8 +8197,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._LastModified[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 252, 17));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 252, 17));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8218,8 +8218,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._AcceptRanges[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 269, 17));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 269, 17));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8239,8 +8239,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._Age[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 286, 7));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 286, 7));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8260,8 +8260,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._ETag[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 293, 8));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 293, 8));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8281,8 +8281,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._Location[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 301, 12));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 301, 12));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8302,8 +8302,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._ProxyAuthenticate[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 313, 22));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 313, 22));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8323,8 +8323,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._RetryAfter[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 335, 15));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 335, 15));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8344,8 +8344,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._SetCookie[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 360, 14));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 360, 14));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8365,8 +8365,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._Vary[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 374, 8));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 374, 8));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8386,8 +8386,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._WWWAuthenticate[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 382, 20));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 382, 20));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8407,8 +8407,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._AccessControlAllowCredentials[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 402, 36));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 402, 36));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8428,8 +8428,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._AccessControlAllowHeaders[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 438, 32));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 438, 32));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8449,8 +8449,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._AccessControlAllowMethods[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 470, 32));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 470, 32));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8470,8 +8470,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._AccessControlAllowOrigin[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 502, 31));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 502, 31));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8491,8 +8491,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._AccessControlExposeHeaders[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 533, 33));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 533, 33));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }
@@ -8512,8 +8512,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                             var value = _headers._AccessControlMaxAge[i];
                             if (value != null)
                             {
-                                output.Write(new ReadOnlySpan<byte>(_headerBytes, 566, 26));
-                                PipelineExtensions.WriteAsciiNoValidation(ref output, value);
+                                buffer.Write(new ReadOnlySpan<byte>(_headerBytes, 566, 26));
+                                PipelineExtensions.WriteAsciiNoValidation(ref buffer, value);
                             }
                         }
                     }

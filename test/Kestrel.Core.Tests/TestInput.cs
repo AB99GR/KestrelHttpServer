@@ -5,6 +5,7 @@ using System;
 using System.Buffers;
 using System.IO.Pipelines;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
 using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure;
@@ -49,7 +50,8 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Tests
         public void Add(string text)
         {
             var data = Encoding.ASCII.GetBytes(text);
-            Application.Output.WriteAsync(data).Wait();
+            async Task Write() => await Application.Output.WriteAsync(data);
+            Write().Wait();
         }
 
         public void Fin()
