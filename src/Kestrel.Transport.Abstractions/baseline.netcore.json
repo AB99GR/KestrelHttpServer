@@ -3176,7 +3176,7 @@
       "Kind": "Struct",
       "Sealed": true,
       "ImplementedInterfaces": [
-        "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Collections.Sequences.ISequence<Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<System.Byte>>"
+        "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Collections.Sequences.ISequence<Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<System.Byte>>"
       ],
       "Members": [
         {
@@ -5371,7 +5371,7 @@
       "Sealed": true,
       "ImplementedInterfaces": [
         "System.IEquatable<Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.Buffer<T0>>",
-        "System.IEquatable<Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>>"
+        "System.IEquatable<Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>>"
       ],
       "Members": [
         {
@@ -5383,7 +5383,7 @@
               "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.Buffer<T0>"
             }
           ],
-          "ReturnType": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>",
+          "ReturnType": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>",
           "Static": true,
           "Visibility": "Public",
           "GenericParameter": []
@@ -5580,13 +5580,13 @@
           "Parameters": [
             {
               "Name": "other",
-              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>"
+              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>"
             }
           ],
           "ReturnType": "System.Boolean",
           "Sealed": true,
           "Virtual": true,
-          "ImplementedInterface": "System.IEquatable<Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>>",
+          "ImplementedInterface": "System.IEquatable<Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>>",
           "Visibility": "Public",
           "GenericParameter": []
         },
@@ -5636,7 +5636,7 @@
             },
             {
               "Name": "right",
-              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>"
+              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>"
             }
           ],
           "ReturnType": "System.Boolean",
@@ -5654,7 +5654,7 @@
             },
             {
               "Name": "right",
-              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>"
+              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>"
             }
           ],
           "ReturnType": "System.Boolean",
@@ -5936,7 +5936,7 @@
           "Kind": "Method",
           "Name": "get_ReadOnlyBuffer",
           "Parameters": [],
-          "ReturnType": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>",
+          "ReturnType": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>",
           "Visibility": "Public",
           "GenericParameter": []
         },
@@ -6090,12 +6090,12 @@
       ]
     },
     {
-      "Name": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>",
+      "Name": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>",
       "Visibility": "Public",
       "Kind": "Struct",
       "Sealed": true,
       "ImplementedInterfaces": [
-        "System.IEquatable<Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>>",
+        "System.IEquatable<Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>>",
         "System.IEquatable<Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.Buffer<T0>>"
       ],
       "Members": [
@@ -6108,7 +6108,7 @@
               "Type": "T0[]"
             }
           ],
-          "ReturnType": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>",
+          "ReturnType": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>",
           "Static": true,
           "Visibility": "Public",
           "GenericParameter": []
@@ -6117,7 +6117,7 @@
           "Kind": "Method",
           "Name": "get_Empty",
           "Parameters": [],
-          "ReturnType": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>",
+          "ReturnType": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>",
           "Static": true,
           "Visibility": "Public",
           "GenericParameter": []
@@ -6147,7 +6147,7 @@
               "Type": "System.Int32"
             }
           ],
-          "ReturnType": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>",
+          "ReturnType": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>",
           "Visibility": "Public",
           "GenericParameter": []
         },
@@ -6164,7 +6164,7 @@
               "Type": "System.Int32"
             }
           ],
-          "ReturnType": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>",
+          "ReturnType": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>",
           "Visibility": "Public",
           "GenericParameter": []
         },
@@ -6291,13 +6291,13 @@
           "Parameters": [
             {
               "Name": "other",
-              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>"
+              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>"
             }
           ],
           "ReturnType": "System.Boolean",
           "Sealed": true,
           "Virtual": true,
-          "ImplementedInterface": "System.IEquatable<Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>>",
+          "ImplementedInterface": "System.IEquatable<Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>>",
           "Visibility": "Public",
           "GenericParameter": []
         },
@@ -6307,7 +6307,7 @@
           "Parameters": [
             {
               "Name": "left",
-              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>"
+              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>"
             },
             {
               "Name": "right",
@@ -6325,7 +6325,7 @@
           "Parameters": [
             {
               "Name": "left",
-              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>"
+              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>"
             },
             {
               "Name": "right",
@@ -6343,11 +6343,11 @@
           "Parameters": [
             {
               "Name": "left",
-              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>"
+              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>"
             },
             {
               "Name": "right",
-              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>"
+              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>"
             }
           ],
           "ReturnType": "System.Boolean",
@@ -6361,11 +6361,11 @@
           "Parameters": [
             {
               "Name": "left",
-              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>"
+              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>"
             },
             {
               "Name": "right",
-              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlySequence<T0>"
+              "Type": "Microsoft.AspNetCore.Server.Kestrel.Internal.System.Buffers.ReadOnlyBuffer<T0>"
             }
           ],
           "ReturnType": "System.Boolean",
