@@ -113,7 +113,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                 }
 
                 var buffer = _pipeWriter;
-                var writer = new BufferWriter(buffer);
+                var writer = new BufferWriter<PipeWriter>(buffer);
 
                 writer.Write(_bytesHttpVersion11);
                 var statusBytes = ReasonPhrases.ToStatusBytes(statusCode, reasonPhrase);
@@ -174,7 +174,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                 }
 
                 writableBuffer = _pipeWriter;
-                var writer = new BufferWriter(writableBuffer);
+                var writer = new BufferWriter<PipeWriter>(writableBuffer);
                 if (buffer.Count > 0)
                 {
                     writer.Write(new ReadOnlySpan<byte>(buffer.Array, buffer.Offset, buffer.Count));

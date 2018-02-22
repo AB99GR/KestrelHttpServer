@@ -899,7 +899,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
 
         private static void WriteChunk(PipeWriter writableBuffer, ArraySegment<byte> buffer)
         {
-            var writer = new BufferWriter(writableBuffer);
+            var writer = new BufferWriter<PipeWriter>(writableBuffer);
             if (buffer.Count > 0)
             {
                 ChunkWriter.WriteBeginChunkBytes(ref writer, buffer.Count);

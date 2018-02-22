@@ -27,7 +27,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.Internal
 
         private volatile bool _aborted;
 
-        internal SocketConnection(Socket socket, MemoryPool memoryPool, ISocketsTrace trace)
+        internal SocketConnection(Socket socket, MemoryPool<byte> memoryPool, ISocketsTrace trace)
         {
             Debug.Assert(socket != null);
             Debug.Assert(memoryPool != null);
@@ -50,7 +50,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.Internal
             _sender = new SocketSender(_socket);
         }
 
-        public override MemoryPool MemoryPool { get; }
+        public override MemoryPool<byte> MemoryPool { get; }
         public override PipeScheduler InputWriterScheduler => PipeScheduler.Inline;
         public override PipeScheduler OutputReaderScheduler => PipeScheduler.ThreadPool;
 

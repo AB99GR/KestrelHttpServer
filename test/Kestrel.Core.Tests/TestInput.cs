@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
 using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure;
+using Microsoft.AspNetCore.Server.Kestrel.Transport.Abstractions.Internal;
 using Microsoft.AspNetCore.Testing;
 using Moq;
 
@@ -16,11 +17,11 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Tests
 {
     class TestInput : IDisposable
     {
-        private MemoryPool _memoryPool;
+        private MemoryPool<byte> _memoryPool;
 
         public TestInput()
         {
-            _memoryPool = new MemoryPool();
+            _memoryPool = KestrelMemoryPool.Create();
             var pair = DuplexPipe.CreateConnectionPair(_memoryPool);
             Transport = pair.Transport;
             Application = pair.Application;

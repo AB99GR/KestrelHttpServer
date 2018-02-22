@@ -32,6 +32,7 @@
     <NewtonsoftJsonPackageVersion>10.0.1</NewtonsoftJsonPackageVersion>
     <SystemBuffersPackageVersion>4.5.0-preview2-26216-0</SystemBuffersPackageVersion>
     <SystemIOPipelinesPackageVersion>4.5.0-preview2-26216-0</SystemIOPipelinesPackageVersion>
+    <MicrosoftExtensionsBuffersSourcesPackageVersion>2.1.0-preview2-t000</MicrosoftExtensionsBuffersSourcesPackageVersion>
     <SystemMemoryPackageVersion>4.5.0-preview2-26216-0</SystemMemoryPackageVersion>
     <SystemNumericsVectorsPackageVersion>4.5.0-preview2-26216-0</SystemNumericsVectorsPackageVersion>
     <SystemRuntimeCompilerServicesUnsafePackageVersion>4.5.0-preview2-26216-0</SystemRuntimeCompilerServicesUnsafePackageVersion>
