@@ -7,6 +7,6 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Transport.Abstractions.Internal
 {
     public static class KestrelMemoryPool
     {
-        public static MemoryPool<byte> Create() => new MemoryPool();
+        public static MemoryPool<byte> Create() => new SlabMemoryPool();
     }
 }

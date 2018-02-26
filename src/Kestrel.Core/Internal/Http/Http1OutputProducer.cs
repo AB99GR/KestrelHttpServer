@@ -120,6 +120,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                 writer.Write(statusBytes);
                 responseHeaders.CopyTo(ref writer);
                 writer.Write(_bytesEndHeaders);
+                writer.Commit();
             }
         }
 
@@ -180,6 +181,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
                     writer.Write(new ReadOnlySpan<byte>(buffer.Array, buffer.Offset, buffer.Count));
                     bytesWritten += buffer.Count;
                 }
+                writer.Commit();
             }
 
             return FlushAsync(writableBuffer, bytesWritten, cancellationToken);

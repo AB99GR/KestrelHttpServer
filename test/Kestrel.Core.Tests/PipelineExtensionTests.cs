@@ -38,6 +38,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Tests
             var writerBuffer = _pipe.Writer;
             var writer = new BufferWriter<PipeWriter>(writerBuffer);
             writer.WriteNumeric(number);
+            writer.Commit();
             writerBuffer.FlushAsync().GetAwaiter().GetResult();
 
             var reader = _pipe.Reader.ReadAsync().GetAwaiter().GetResult();
@@ -61,7 +62,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Tests
             var bufferLength = writer.Span.Length;
             writer.WriteNumeric(ulong.MaxValue);
             Assert.NotEqual(bufferLength, writer.Span.Length);
-
+            writer.Commit();
             writerBuffer.FlushAsync().GetAwaiter().GetResult();
 
             var reader = _pipe.Reader.ReadAsync().GetAwaiter().GetResult();
@@ -86,6 +87,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Tests
             var writerBuffer = _pipe.Writer;
             var writer = new BufferWriter<PipeWriter>(writerBuffer);
             writer.WriteAsciiNoValidation(input);
+            writer.Commit();
             writerBuffer.FlushAsync().GetAwaiter().GetResult();
             var reader = _pipe.Reader.ReadAsync().GetAwaiter().GetResult();
 
@@ -113,6 +115,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Tests
             var writerBuffer = _pipe.Writer;
             var writer = new BufferWriter<PipeWriter>(writerBuffer);
             writer.WriteAsciiNoValidation(input);
+            writer.Commit();
             writerBuffer.FlushAsync().GetAwaiter().GetResult();
             var reader = _pipe.Reader.ReadAsync().GetAwaiter().GetResult();
 
@@ -129,6 +132,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Tests
             {
                 writer.WriteAsciiNoValidation(new string((char)i, 1));
             }
+            writer.Commit();
             writerBuffer.FlushAsync().GetAwaiter().GetResult();
 
             var reader = _pipe.Reader.ReadAsync().GetAwaiter().GetResult();
@@ -162,7 +166,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Tests
             var bufferLength = writer.Span.Length;
             writer.WriteAsciiNoValidation(testString);
             Assert.NotEqual(bufferLength, writer.Span.Length);
-
+            writer.Commit();
             writerBuffer.FlushAsync().GetAwaiter().GetResult();
 
             var reader = _pipe.Reader.ReadAsync().GetAwaiter().GetResult();

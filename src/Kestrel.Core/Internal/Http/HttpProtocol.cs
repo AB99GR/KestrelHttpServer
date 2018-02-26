@@ -904,6 +904,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http
             {
                 ChunkWriter.WriteBeginChunkBytes(ref writer, buffer.Count);
                 writer.Write(new ReadOnlySpan<byte>(buffer.Array, buffer.Offset, buffer.Count));
+                writer.Commit();
                 ChunkWriter.WriteEndChunkBytes(ref writer);
             }
         }
